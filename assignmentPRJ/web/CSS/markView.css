@@ -1,0 +1,47 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 20, 2022, 11:56:24 PM
+    Author     : LEGION OS
+*/
+
+.header{
+  width: 100%;
+}
+h1{
+  font-size:250%;
+  background:pink;
+  text-align : center;
+}
+.wrap {
+width: 100%;
+overflow:auto;
+padding-top : 10px;
+}
+
+.fleft {
+    float:left; 
+    width: 50%;
+    height: 400px;
+}
+
+.fright {
+    float: right;
+    height: 400px;
+    width: 50%;
+    
+}
+.tab{
+  
+  width: 60%;
+  border-collapse: collapse; 
+  margin: auto;
+}
+.tab2{
+  
+  width: 90%;
+  border-collapse: collapse; 
+  margin: auto;
+}
