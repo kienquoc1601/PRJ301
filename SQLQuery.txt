@@ -1,0 +1,61 @@
+-studentDetailView.jsp
+
+*s1 :
+SELECT [student_id]
+      ,[username]
+      ,[major_id]
+      ,[first_name]
+      ,[last_name]
+      ,[gender]
+      ,[dob]
+      ,[roll_number]
+  FROM [dbo].[Student]
+  
+*c1 , c2 :
+SELECT c.course_id , c.name , c.semester
+  FROM [dbo].[StudentGrade] as t
+  JOIN [dbo].[GradeItem] as i
+	ON t.grade_item_id= i.grade_item_id
+  JOIN dbo.course as c
+	ON i.course_id = c.course_id
+	WHERE t.student_id = ?;
+------------------------------------------------------------------------
+markView.jsp
+
+*c1 :
+SELECT c.course_id , c.name , c.semester
+  FROM [dbo].[StudentGrade] as t
+  JOIN [dbo].[GradeItem] as i
+	ON t.grade_item_id= i.grade_item_id
+  JOIN dbo.course as c
+	ON i.course_id = c.course_id
+	WHERE t.student_id = ?;
+
+*g1 :
+SELECT s.grade_item_id,g.grade_item_id ,s.grade_date,g.name,g.weight,s.score
+  FROM [dbo].[StudentGrade] as s
+  JOIN [dbo].[GradeItem] as g
+	ON s.grade_item_id= g.grade_item_id
+	WHERE s.student_id = ? AND g.course_id = ?
+	ORDER BY g.weight
+
+------------------------------------------------------------------------
+teacherDetailView.jsp
+
+
+*t1 :
+SELECT [teacher_id]
+      ,[username]
+      ,[first_name]
+      ,[last_name]
+      ,[email]
+  FROM [dbo].[Teacher]
+
+*c1 :
+SELECT c.course_id , c.name , c.semester
+  FROM [dbo].[StudentGrade] as t
+  JOIN [dbo].[GradeItem] as i
+	ON t.grade_item_id= i.grade_item_id
+  JOIN dbo.course as c
+	ON i.course_id = c.course_id
+	WHERE t.student_id = ?;
