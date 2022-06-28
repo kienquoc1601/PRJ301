@@ -20,4 +20,11 @@ TODO LIST :
 -database(chưa final)  
 -query(chưa final)  
  
+ PRJ :Student , assessment , Exam 
  
+ SELECT * FROM   
+ (SELECT * FROM Exam ) A    
+ INNER JOIN    
+ (SELECT said , aid , max(date) as date FROM Exam    
+ Group BY sid,aid) B  
+ ON A.aid = B.aid AND A.sid = B.sid AND A.DATE =b.date  
