@@ -3,20 +3,20 @@
 PRJ301 Assignment : Students grading sub-system web .
 
 TODO LIST :
-+ Front-end :
++ Front-end :  
 -loginPage  
 -studentDetailView (thô)  
 -markView (thô)  
 -teacherDetailView (thô)  
 -courseMarkView (thô)  
-+ Back-end :  
++ Back-end :    
 -login  
 -authorization  
 -student information   
 -teacher information  
 -course marks view , add , edit for teacher  
   
-+ Database :  
++ Database :    
 -database(chưa final)  
 -query(chưa final)  
  
