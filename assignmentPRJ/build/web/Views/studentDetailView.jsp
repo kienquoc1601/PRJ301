@@ -4,11 +4,15 @@
     Author     : LEGION OS
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="model.Student" %>
+<%@ page import="model.Major" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="../CSS/studentDetailView.css">
+        <link rel="stylesheet" type="text/css" href="CSS/studentDetailView.css">
+         
     </head>
     <body>
         <div>
@@ -28,30 +32,33 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Truong_Gia_Binh_-_Chairman_%26_CEO_of_FPT_Corporation.jpg" >
                 <table border="1">
                     <tbody>
+                            <%
+                            Student s = (Student)request.getAttribute("student");
+                            
+                            
+                            %>
+                       
                         <tr>
                             <td style="background-color:powderblue;">Full Name(*s1)</td>
-                            <td >Truong Gia Binh</td>
+                            <td ><%= s.getName() %></td>
                         </tr>
                         <tr>
                             <td style="background-color:powderblue;">DOB</td>
-                            <td>30 / 2 /2001</td>
+                            <td><%= s.getDob() %></td>
                         </tr>
                         <tr>
                             <td style="background-color:powderblue;">Gender</td>
-                            <td>Female</td>
+                            <td><%= s.isGender() %></td>
                         </tr>
                         <tr>
                             <td style="background-color:powderblue;">Roll Number</td>
-                            <td>HE160066</td>
+                            <td><%= s.getRollNumber() %></td>
                         </tr>
                         <tr>
                             <td style="background-color:powderblue;">Major</td>
-                            <td>SE</td>
+                            <td><%= s.getMajor().getMajorName() %></td>
                         </tr>
-                        <tr>
-                            <td style="background-color:powderblue;">Email</td>
-                            <td>binhGT@fpt.edu.vn</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -72,29 +79,12 @@
                         <tr>
                             <td style="background-color:powderblue;">Course (*c2)</td>
                         </tr>
-                        <tr>
-                            <td><a href="url">MAE</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">PRN</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">PRJ</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">MAD</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">SWP</a></td>
-
-                        </tr>
-                        <tr>
-                            <td><a href="url">SWR</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">SWT</a></td>
-
-                        </tr>
+                        <c:forEach items="${requestScope.course}" var="c">
+                            <tr>
+                                <td><a href="url">${c.name}</a></td>
+                            </tr>   
+                        </c:forEach>
+                        
                     </tbody>
                 </table>
 
