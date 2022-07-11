@@ -12,12 +12,12 @@ TODO LIST :
 + Back-end :    
 -login  
 -authorization  
--student information   
+-student information   (in-progress)
 -teacher information  
 -course marks view , add , edit for teacher  
   
 + Database :    
--database(chưa final)  
+-database(final)  
 -query(chưa final)  
  
  PRJ :Student , assessment , Exam 
