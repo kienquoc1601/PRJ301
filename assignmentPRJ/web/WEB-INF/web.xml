@@ -4,9 +4,25 @@
         <servlet-name>studentDetailController</servlet-name>
         <servlet-class>controller.studentDetailController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StudentMarkController</servlet-name>
+        <servlet-class>controller.StudentMarkController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loginController</servlet-name>
+        <servlet-class>controller.loginController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>studentDetailController</servlet-name>
         <url-pattern>/studentDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentMarkController</servlet-name>
+        <url-pattern>/mark</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

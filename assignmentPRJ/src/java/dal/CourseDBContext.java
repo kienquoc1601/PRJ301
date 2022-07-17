@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Course;
@@ -30,6 +31,7 @@ public class CourseDBContext extends DBContext<Course> {
                                 "      ,[semester]\n" +
                                 "  FROM [dbo].[Course]";
             PreparedStatement stm = connection.prepareStatement(sql);
+            
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Course c = new Course();
@@ -41,7 +43,7 @@ public class CourseDBContext extends DBContext<Course> {
                 courses.add(c);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return courses;
     }
@@ -51,6 +53,40 @@ public class CourseDBContext extends DBContext<Course> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    public ArrayList<Course> studentCourses(int id){
+        ArrayList<Course> courses = new ArrayList<Course>();
+        
+        try{
+            String sql = "SELECT c.course_id\n" +
+                                "      ,teacher_id\n" +
+                                "      ,subject_id\n" +
+                                "      ,c.name\n" +
+                                "      ,semester" +
+                                "  FROM [dbo].[StudentGrade] as t\n" +
+                                "  JOIN [dbo].[GradeItem] as i\n" +
+                                "	ON t.grade_item_id= i.grade_item_id\n" +
+                                "  JOIN dbo.course as c\n" +
+                                "	ON i.course_id = c.course_id\n" +
+                                "	WHERE t.student_id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1,id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                    Course c = new Course();
+                    c.setCourseId(rs.getInt("course_id"));
+                    c.setTeacherId(rs.getInt("teacher_id"));
+                    c.setSubjectId(rs.getInt("subject_id"));
+                    c.setName(rs.getString("name"));
+                    c.setSemester(rs.getString("semester"));
+                    courses.add(c);
+            }
+            
+            
+        }catch (SQLException ex){
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courses;
+    }
     
 
     @Override

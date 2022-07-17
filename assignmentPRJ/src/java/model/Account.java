@@ -4,48 +4,53 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author LEGION OS
  */
 public class Account {
     
-        private String userName;
-        private String password;
-        private Boolean admin;
+    private String username;
+    private String password;
+    private boolean admin;
+    private ArrayList<Role> roles = new ArrayList<>();
 
-    public Account() {
+    public ArrayList<Role> getRoles() {
+        return roles;
     }
 
-    public Account(String userName, String password, Boolean admin) {
-        this.userName = userName;
-        this.password = password;
-        this.admin = admin;
+    public void setRoles(ArrayList<Role> roles) {
+        this.roles = roles;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setAdmin(Boolean admin) {
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
         this.admin = admin;
     }
+
+    
+
         
         
              

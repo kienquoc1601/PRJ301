@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,11 +20,13 @@ public class Student {
     private boolean gender;
     private Date dob;
     private String rollNumber;
-
+    private ArrayList<Course> courses;
+    
+    
     public Student() {
     }
 
-    public Student(Integer studentId, String username, Major major, String name, String imgSrc, boolean gender, Date dob, String rollNumber) {
+    public Student(Integer studentId, String username, Major major, String name, String imgSrc, boolean gender, Date dob, String rollNumber, ArrayList<Course> courses) {
         this.studentId = studentId;
         this.username = username;
         this.major = major;
@@ -32,7 +35,17 @@ public class Student {
         this.gender = gender;
         this.dob = dob;
         this.rollNumber = rollNumber;
+        this.courses = courses;
     }
+
+    public ArrayList<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(ArrayList<Course> courses) {
+        this.courses = courses;
+    }
+
 
     public Integer getStudentId() {
         return studentId;

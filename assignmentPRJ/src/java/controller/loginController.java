@@ -5,24 +5,20 @@
 
 package controller;
 
-import dal.CourseDBContext;
-import dal.StudentDBContext;
+import dal.AccountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import model.Account;
-import model.Course;
-import model.Student;
 
 /**
  *
  * @author LEGION OS
  */
-public class studentDetailController extends HttpServlet {
+public class loginController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,7 +29,6 @@ public class studentDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         
     } 
 
@@ -48,19 +43,7 @@ public class studentDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        //
-       Account account = (Account)request.getSession().getAttribute("account");
-       String username = account.getUsername();
-       StudentDBContext dbStudent = new StudentDBContext();
-       CourseDBContext dbCourse = new CourseDBContext();
-    
-       Student student =dbStudent.getByUsername(username);
-       ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
-        request.setAttribute("student", student);
-         request.setAttribute("course", courses);
-        request.getRequestDispatcher("Views/studentDetailView.jsp").forward(request, response);
-//        
+        processRequest(request, response);
     } 
 
     /** 
@@ -73,20 +56,23 @@ public class studentDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        //String username = request.getParameter("Uname");
-//        Account account = (Account)request.getSession().getAttribute("account");
-//        String username = account.getUsername();
-//        StudentDBContext dbStudent = new StudentDBContext();
-//        CourseDBContext dbCourse = new CourseDBContext();
-//     
-//        Student student =dbStudent.getByUsername(username);
-//        ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
-//        request.setAttribute("student", student);
-//        request.setAttribute("course", courses);
-//        request.getRequestDispatcher("Views/studentDetailView.jsp").forward(request, response);
-        
-        
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        AccountDBContext db = new AccountDBContext();
+        Account account = db.getAccountByUsernamePassword(user, pass);
+        if(account != null)
+        {
+            request.getSession().setAttribute("account", account);
+            if(account.isAdmin()){
+                
+            }else{
+                response.sendRedirect(request.getContextPath() + "/studentDetail");
+            }
+        }
+        else
+        {
+            response.getWriter().println("login failed!");
+        }
     }
 
     /** 

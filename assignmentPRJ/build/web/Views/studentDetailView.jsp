@@ -81,7 +81,7 @@
                         </tr>
                         <c:forEach items="${requestScope.course}" var="c">
                             <tr>
-                                <td><a href="url">${c.name}</a></td>
+                                <td><a href="mark?id=${c.courseId}">${c.name}</a></td>
                             </tr>   
                         </c:forEach>
                         

@@ -5,7 +5,7 @@
 
 package controller;
 
-import dal.CourseDBContext;
+import dal.GradeDBContext;
 import dal.StudentDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,15 +14,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashSet;
 import model.Account;
-import model.Course;
 import model.Student;
+import model.StudentGrade;
 
 /**
  *
  * @author LEGION OS
  */
-public class studentDetailController extends HttpServlet {
+public class StudentMarkController extends BaseAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,7 +34,7 @@ public class studentDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
         
     } 
 
@@ -46,21 +47,21 @@ public class studentDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //
-       Account account = (Account)request.getSession().getAttribute("account");
-       String username = account.getUsername();
-       StudentDBContext dbStudent = new StudentDBContext();
-       CourseDBContext dbCourse = new CourseDBContext();
-    
-       Student student =dbStudent.getByUsername(username);
-       ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
-        request.setAttribute("student", student);
-         request.setAttribute("course", courses);
-        request.getRequestDispatcher("Views/studentDetailView.jsp").forward(request, response);
-//        
+         GradeDBContext g = new GradeDBContext();
+         StudentDBContext dbStudent = new StudentDBContext();
+         int cid = Integer.parseInt(request.getParameter("id"));
+         Account account = (Account)request.getSession().getAttribute("account");
+         String username = account.getUsername();
+         Student student =dbStudent.getByUsername(username);
+         ArrayList<StudentGrade> grades = g.studentCourseGradeList(student.getStudentId(), cid);
+         request.setAttribute("student", student);
+         request.setAttribute("grades", grades);
+        request.getRequestDispatcher("Views/markView.jsp").forward(request, response);
+        
+
     } 
 
     /** 
@@ -70,24 +71,7 @@ public class studentDetailController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        //String username = request.getParameter("Uname");
-//        Account account = (Account)request.getSession().getAttribute("account");
-//        String username = account.getUsername();
-//        StudentDBContext dbStudent = new StudentDBContext();
-//        CourseDBContext dbCourse = new CourseDBContext();
-//     
-//        Student student =dbStudent.getByUsername(username);
-//        ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
-//        request.setAttribute("student", student);
-//        request.setAttribute("course", courses);
-//        request.getRequestDispatcher("Views/studentDetailView.jsp").forward(request, response);
-        
-        
-    }
+    
 
     /** 
      * Returns a short description of the servlet.
@@ -97,5 +81,12 @@ public class studentDetailController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
 
 }
