@@ -1,164 +1,54 @@
-<%-- 
-    Document   : courseMarkView
-    Created on : Jun 28, 2022, 1:26:15 AM
-    Author     : LEGION OS
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="model.Student" %>
+<%@ page import="model.StudentGrade" %>
+<%@ page import="model.GradeItem" %>
 <!DOCTYPE html>
 <html>
     <head>
-
-        <link rel="stylesheet" type="text/css" href="../CSS/courseMarkView.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <link href="CSS/grid_control.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>
-            <table style="width: 100%;">
-                <tbody>
-                    <tr style="background-color: pink;">
-                        <td>Hello <a href="url">truong gia binh</a></td>
-                        <td>This is a Teacher Account</td>
-                        <td><a href="url">Log Out</a></td>
-                    </tr>
-                </tbody>
+        <form action="markView" method="POST">
+            <table border="1px">
+                <tr>
+                    <td></td>
+                    <c:forEach items="${requestScope.gradeItems}" var="a">
+                        <td>${a.name}</td> 
+                    </c:forEach>
+                <tr/>
+                <c:forEach items="${requestScope.students}" var="s">
+                    <tr>
+                        <td>${s.name}</td>
+                        <c:forEach items="${requestScope.gradeItems}" var="a">
+                            <td>
+                                <input name="score${s.studentId}_${a.gradeItemId}" class="short_textfield" type="text"
+                                       <c:forEach items="${requestScope.studentGrades}" var="e">   
+                                           <c:if test="${e.student.studentId eq s.studentId and e.gradeItem.gradeItemId eq a.gradeItemId}">
+                                               value="${e.score}"
+                                           </c:if>
+                                       </c:forEach>
+                                       />
+                                <input name="sid${s.studentId}_${a.gradeItemId}" type="hidden"
+                                       <c:forEach items="${requestScope.studentGrades}" var="e">   
+                                           <c:if test="${e.student.studentId eq s.studentId and e.gradeItem.gradeItemId eq a.gradeItemId}">
+                                               value="${e.sid}"
+                                           </c:if>
+                                       </c:forEach>
+                                       />
+                                <input name="component" value="${s.studentId}_${a.gradeItemId}" type="hidden"
+                                       />
+                            
+                            </td> 
+                            </c:forEach>
+                    <tr/>  
+                </c:forEach>
             </table>
-        </div>
-        <div class="wrap">
-            <div class="option">
-                <form action="/action_page.php">
-                    <div style = "padding-top : 10%; padding-left : 20% ; padding-bottom : 20px;">
-                        <label for="semester">Choose Semester :</label>
-                        <select id="semester" name="semester">
-                            <option value="volvo">sum2022</option>
-                            <option value="saab">spring2022</option>
-                            <option value="fiat">winter2022</option>
-                        </select>
-                        <label for="course">Choose Course :</label>
-                        <select id="course" name="course">
-                            <option value="volvo">sum2022</option>
-                            <option value="saab">spring2022</option>
-                            <option value="fiat">winter2022</option>
-                        </select>
-                        <input type="submit" value="Submit">
-                    </div>
-
-                </form>
-
-            </div>
-
-
-            <div class="tab">
-                <h2 style="text-align : center">Course : MAE</h2>
-                <h2 style="text-align : center">Semester : MAE</h2>
-                <form action="/action_page.php">
-                    <table class = "tab2" border="1">
-                        <tbody>
-                            <tr>
-                                <th class="col">Student(*g1)</th>
-                                <th class="col">Workshop 1</th>
-                                <th class="col">Workshop 2</th>
-                                <th class="col">Practice 1</th>
-                                <th class="col">Practive 2</th>
-                                <th class="col">Practical Test</th>
-                                <th class="col">Final Test</th>
-                                <th class="col">Average</th>
-                            </tr>
-                            <tr>
-                                <td>Student 1</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                            <tr>
-                                <td>Student 2</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                            <tr>
-                                <td>Student 3</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                            <tr>
-                                <td>Student 3</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                            <tr>
-                                <td>Student 4</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-
-                            </tr>
-                            <tr>
-                                <td>Student 5</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                            <tr>
-                                <td>Student 6</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                            <tr>
-                                <td>Student 7</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                            <tr>
-                                <td>Student 8</td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                                <td><input type="text" value="4" class = "txtb"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <input type="submit" value="Submit">
-                </form>
-            </div>     
-        </div>   
+            <br/>
+            
+            <input type="submit" value="Save"/>
+        </form>
     </body>
 </html>

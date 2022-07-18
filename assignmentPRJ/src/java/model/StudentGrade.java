@@ -11,7 +11,9 @@ import java.sql.Date;
  * @author LEGION OS
  */
 public class StudentGrade {
+    private Integer sid;
     private GradeItem gradeItem;
+     private Student student;
     private Integer studentId;
     private Date gradeDate;
     private float score;
@@ -19,15 +21,25 @@ public class StudentGrade {
     public StudentGrade() {
     }
 
-    public StudentGrade(GradeItem gradeItem, Integer studentId, Date gradeDate, float score) {
+    public StudentGrade(Integer sid, GradeItem gradeItem, Student student, Integer studentId, Date gradeDate, float score) {
+        this.sid = sid;
         this.gradeItem = gradeItem;
+        this.student = student;
         this.studentId = studentId;
         this.gradeDate = gradeDate;
         this.score = score;
     }
 
+    public Integer getSid() {
+        return sid;
+    }
+
     public GradeItem getGradeItem() {
         return gradeItem;
+    }
+
+    public Student getStudent() {
+        return student;
     }
 
     public Integer getStudentId() {
@@ -42,8 +54,16 @@ public class StudentGrade {
         return score;
     }
 
+    public void setSid(Integer sid) {
+        this.sid = sid;
+    }
+
     public void setGradeItem(GradeItem gradeItem) {
         this.gradeItem = gradeItem;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public void setStudentId(Integer studentId) {
@@ -58,6 +78,5 @@ public class StudentGrade {
         this.score = score;
     }
 
-    
     
 }

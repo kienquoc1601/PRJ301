@@ -5,20 +5,24 @@
 
 package controller;
 
-import dal.AccountDBContext;
+import dal.CourseDBContext;
+import dal.TeacherDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import model.Account;
+import model.Course;
+import model.Teacher;
 
 /**
  *
  * @author LEGION OS
  */
-public class loginController extends HttpServlet {
+public class teacherDetailController extends BaseAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,11 +44,7 @@ public class loginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+  
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -53,30 +53,7 @@ public class loginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        AccountDBContext db = new AccountDBContext();
-        Account account = db.getAccountByUsernamePassword(user, pass);
-        
-        if(account != null)
-        {
-            request.getSession().setAttribute("account", account);
-            if(account.isAdmin()){
-                response.sendRedirect("teacherDetail");
-            }else{
-                response.sendRedirect("studentDetail");
-                
-            }
-        }
-        else
-        {
-            response.getWriter().println("login failed!");
-        }
-    }
-
+   
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
@@ -85,5 +62,26 @@ public class loginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        Account account = (Account) request.getSession().getAttribute("account");
+        String username = account.getUsername();
+        TeacherDBContext dbTeacher = new TeacherDBContext();
+        CourseDBContext dbCourse = new CourseDBContext();
+        Teacher teacher = dbTeacher.getByUsername(username);
+        ArrayList<Course> courses = new ArrayList<Course>();
+        courses = dbCourse.teacherCourses(teacher.getTeacherId());
+        request.setAttribute("teacher", teacher);
+        request.setAttribute("course", courses);
+        request.getRequestDispatcher("Views/teacherDetailView.jsp").forward(request, response);
+        
+    }
+
+    @Override
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

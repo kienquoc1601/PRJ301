@@ -8,11 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Course;
-import model.Student;
 
 /**
  *
@@ -57,7 +55,7 @@ public class CourseDBContext extends DBContext<Course> {
         ArrayList<Course> courses = new ArrayList<Course>();
         
         try{
-            String sql = "SELECT c.course_id\n" +
+            String sql = "SELECT DISTINCT c.course_id\n" +
                                 "      ,teacher_id\n" +
                                 "      ,subject_id\n" +
                                 "      ,c.name\n" +
@@ -79,6 +77,8 @@ public class CourseDBContext extends DBContext<Course> {
                     c.setName(rs.getString("name"));
                     c.setSemester(rs.getString("semester"));
                     courses.add(c);
+                    
+                    
             }
             
             
@@ -87,7 +87,36 @@ public class CourseDBContext extends DBContext<Course> {
         }
         return courses;
     }
-    
+    public ArrayList<Course> teacherCourses(int id){
+        ArrayList<Course> courses = new ArrayList<Course>();
+        
+        try{
+            String sql = "SELECT DISTINCT c.course_id , c.name , c.semester, c.subject_id\n" +
+                                "  FROM [dbo].[Course] as c\n" +
+                                "  JOIN [dbo].[Teacher] as t\n" +
+                                "	ON t.teacher_id= c.teacher_id\n" +
+                                "	WHERE t.teacher_id= ?;";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1,id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                    Course c = new Course();
+                    c.setCourseId(rs.getInt("course_id"));
+                    c.setTeacherId(id);
+                    c.setSubjectId(rs.getInt("subject_id"));
+                    c.setName(rs.getString("name"));
+                    c.setSemester(rs.getString("semester"));
+                     courses.add(c);
+                    
+                    
+            }
+            
+            
+        }catch (SQLException ex){
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courses;
+    }
 
     @Override
     public void insert(Course model) {

@@ -22,7 +22,7 @@ import model.Student;
  *
  * @author LEGION OS
  */
-public class studentDetailController extends HttpServlet {
+public class studentDetailController extends BaseAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,7 +33,7 @@ public class studentDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
         
     } 
 
@@ -46,21 +46,19 @@ public class studentDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //
-       Account account = (Account)request.getSession().getAttribute("account");
-       String username = account.getUsername();
-       StudentDBContext dbStudent = new StudentDBContext();
-       CourseDBContext dbCourse = new CourseDBContext();
-    
-       Student student =dbStudent.getByUsername(username);
-       ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
+        Account account = (Account) request.getSession().getAttribute("account");
+        String username = account.getUsername();
+        StudentDBContext dbStudent = new StudentDBContext();
+        CourseDBContext dbCourse = new CourseDBContext();
+        Student student = dbStudent.getByUsername(username);
+        ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
         request.setAttribute("student", student);
-         request.setAttribute("course", courses);
+        request.setAttribute("course", courses);
         request.getRequestDispatcher("Views/studentDetailView.jsp").forward(request, response);
-//        
+        
     } 
 
     /** 
@@ -73,19 +71,7 @@ public class studentDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        //String username = request.getParameter("Uname");
-//        Account account = (Account)request.getSession().getAttribute("account");
-//        String username = account.getUsername();
-//        StudentDBContext dbStudent = new StudentDBContext();
-//        CourseDBContext dbCourse = new CourseDBContext();
-//     
-//        Student student =dbStudent.getByUsername(username);
-//        ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
-//        request.setAttribute("student", student);
-//        request.setAttribute("course", courses);
-//        request.getRequestDispatcher("Views/studentDetailView.jsp").forward(request, response);
-        
+
         
     }
 
@@ -97,5 +83,10 @@ public class studentDetailController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

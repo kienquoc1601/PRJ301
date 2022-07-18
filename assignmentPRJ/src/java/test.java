@@ -18,7 +18,7 @@ public class test {
          public static void main(String[] args){
              GradeDBContext g = new GradeDBContext();
              StudentDBContext dbStudent = new StudentDBContext();
-             ArrayList<StudentGrade> gl = g.studentCourseGradeList(1, 1);
+             ArrayList<StudentGrade> gl = g.studentCourseGrades(1, 1);
              for(StudentGrade s : gl){
                  
                  System.out.println(s.getGradeItem().getName());

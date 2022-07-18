@@ -56,7 +56,7 @@ public class StudentMarkController extends BaseAuthenticationController {
          Account account = (Account)request.getSession().getAttribute("account");
          String username = account.getUsername();
          Student student =dbStudent.getByUsername(username);
-         ArrayList<StudentGrade> grades = g.studentCourseGradeList(student.getStudentId(), cid);
+         ArrayList<StudentGrade> grades = g.studentCourseGrades(student.getStudentId(), cid);
          request.setAttribute("student", student);
          request.setAttribute("grades", grades);
         request.getRequestDispatcher("Views/markView.jsp").forward(request, response);

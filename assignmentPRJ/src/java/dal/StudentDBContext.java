@@ -110,6 +110,44 @@ public class StudentDBContext extends DBContext<Student>{
         }
         return null;
     }
+     
+     public ArrayList<Student> CourseStudent(int course_id){
+         ArrayList<Student> students = new ArrayList<>();
+        try {
+            String sql = "SELECT DISTINCT s.student_id\n" +
+                                "      ,[username]\n" +
+                                "      ,[major_id]\n" +
+                                "      ,s.name\n" +
+                                "      ,[img_src]\n" +
+                                "      ,[gender]\n" +
+                                "      ,[dob]\n" +
+                                "      ,[roll_number]\n" +
+                                "  FROM [dbo].[Student] as s\n" +
+                                "  JOIN dbo.StudentGrade as sg\n" +
+                                "  ON s.student_id = sg.student_id\n" +
+                                "  JOIN dbo.GradeItem as g\n" +
+                                "  ON sg.grade_item_id = g.grade_item_id\n" +
+                                "  WHERE course_id = ?" ;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, course_id);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+                Student s = new Student();
+                s.setStudentId(rs.getInt("student_id"));
+                s.setUsername(rs.getString("username"));
+                s.setName(rs.getString("name"));
+                s.setImgSrc(rs.getString("img_src"));
+                s.setGender(rs.getBoolean("gender"));
+                s.setDob(rs.getDate("dob"));
+                s.setRollNumber(rs.getString("roll_number"));                
+                students.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return students;
+     }
     
 
     @Override

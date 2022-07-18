@@ -34,8 +34,6 @@
                     <tbody>
                             <%
                             Student s = (Student)request.getAttribute("student");
-                            
-                            
                             %>
                        
                         <tr>
@@ -64,22 +62,14 @@
             </div>
 
             <div class="fright">
-                <div style = "padding-left : 20% ; padding-bottom : 10px;">
-                    <label for="cars">Choose Semester:(*c1)</label>
-                    <select id="cars" name="cars">
-                        <option value="volvo">sum2022</option>
-                        <option value="saab">spring2022</option>
-                        <option value="fiat">winter2022</option>
-
-                    </select>
-                </div>
+                
 
                 <table class = "tab" border="1">
                     <tbody>
                         <tr>
                             <td style="background-color:powderblue;">Course (*c2)</td>
                         </tr>
-                        <c:forEach items="${requestScope.course}" var="c">
+                        <c:forEach items="${requestScope.courses}" var="c">
                             <tr>
                                 <td><a href="mark?id=${c.courseId}">${c.name}</a></td>
                             </tr>   

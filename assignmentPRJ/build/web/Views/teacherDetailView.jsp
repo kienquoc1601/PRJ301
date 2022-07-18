@@ -4,11 +4,14 @@
     Author     : LEGION OS
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="model.Teacher" %>
+<%@ page import="model.Course" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="../CSS/teacherDetailView.css">
+        <link rel="stylesheet" type="text/css" href="CSS/teacherDetailView.css">
     </head>
     <body>
         <div>
@@ -29,57 +32,33 @@
             <div class="fleft"><img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Truong_Gia_Binh_-_Chairman_%26_CEO_of_FPT_Corporation.jpg" />
                 <table border="1">
                     <tbody>
+                        <%
+                            Teacher t = (Teacher)request.getAttribute("teacher");
+                            %>
                         <tr>
                             <td style="background-color: powderblue;">Full Name(*s1)</td>
-                            <td>Truong Gia Binh</td>
-                        </tr>
-                        <tr>
-                            <td style="background-color: powderblue;">DOB</td>
-                            <td>30 / 2 /2001</td>
-                        </tr>
-                        <tr>
-                            <td style="background-color: powderblue;">Gender</td>
-                            <td>Female</td>
+                            <td><%= t.getName() %></td>
                         </tr>
                         <tr>
                             <td style="background-color: powderblue;">Email</td>
-                            <td>binhGT@fpt.edu.vn</td>
+                            <td><%= t.getEmail() %></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="fright">
-                <div style="padding-left: 20%; padding-bottom: 10px;"><label for="cars">Choose Semester:(*c1)</label><select id="cars" name="cars">
-                        <option value="volvo">sum2022</option>
-                        <option value="saab">spring2022</option>
-                        <option value="fiat">winter2022</option>
-                    </select></div>
+                
                 <table class="tab" border="1">
                     <tbody>
                         <tr>
                             <td style="background-color: powderblue;">Course (*c2)</td>
                         </tr>
-                        <tr>
-                            <td><a href="url">MAE</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">PRN</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">PRJ</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">MAD</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">SWP</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">SWR</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="url">SWT</a></td>
-                        </tr>
+                        
+                        <c:forEach items="${requestScope.course}" var="c">
+                            <tr>
+                                <td><a href="markView?id=${c.courseId}">${c.name}</a></td>
+                            </tr>   
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
