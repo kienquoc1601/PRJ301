@@ -171,14 +171,14 @@ public class GradeDBContext extends DBContext<StudentGrade>{
                     stm.executeUpdate();
                 } //UPDATE
                 else if (exam.getSid() != -1 && exam.getScore() != -1) {
-                    String sql_update = "UPDATE StudentGrade SET Score = ? WHERE eid = ?";
+                    String sql_update = "UPDATE StudentGrade SET Score = ? WHERE sid = ?";
                     PreparedStatement stm = connection.prepareStatement(sql_update);
                     stm.setFloat(1, exam.getScore());
                     stm.setInt(2, exam.getSid());
                     stm.executeUpdate();
                 } //DELETE
                 else if (exam.getSid() != -1 && exam.getScore() == -1) {
-                    String sql_delete = "DELETE StudentGrade WHERE eid = ?";
+                    String sql_delete = "DELETE StudentGrade WHERE sid = ?";
                     PreparedStatement stm = connection.prepareStatement(sql_delete);
                     stm.setInt(1, exam.getSid());
                     stm.executeUpdate();
