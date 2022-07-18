@@ -56,7 +56,7 @@ public class studentDetailController extends BaseAuthenticationController {
         Student student = dbStudent.getByUsername(username);
         ArrayList<Course> courses = dbCourse.studentCourses(student.getStudentId());
         request.setAttribute("student", student);
-        request.setAttribute("course", courses);
+        request.setAttribute("courses", courses);
         request.getRequestDispatcher("Views/studentDetailView.jsp").forward(request, response);
         
     } 

@@ -35,7 +35,7 @@ public class GradeDBContext extends DBContext<StudentGrade>{
                 "					JOIN [dbo].[GradeItem] as G\n" +
                 "					ON A.grade_item_id= G.grade_item_id\n" +
                 "					WHERE A.student_id = ? AND G.course_id = ?\n" +
-                "					ORDER BY G.weight";
+                "					ORDER BY G.weight ,A.grade_item_id";
           PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1,sid);
             stm.setInt(2,cid);

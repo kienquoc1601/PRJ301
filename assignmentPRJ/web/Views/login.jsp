@@ -10,12 +10,24 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="../CSS/login.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form action="../login" method="post"> 
-            Username: <input type="text" name="user"/> <br/>
-            Password: <input type="password" name="pass" /> <br/>
-            <input type="submit" value="Login"/>
-        </form>
+        
+        <form action="../login" method="post">
+                <div class="container">
+                  <label for="user"><b>Username</b></label>
+                  <input type="text" placeholder="Enter Username" name="user" required>
+
+                  <label for="pass"><b>Password</b></label>
+                  <input type="password" placeholder="Enter Password" name="pass" required>
+
+                  <button type="submit">Login</button>
+                  
+                </div>
+                <div class="container" style="background-color:#f1f1f1">
+    
+                </div>
+         </form>
     </body>
 </html>

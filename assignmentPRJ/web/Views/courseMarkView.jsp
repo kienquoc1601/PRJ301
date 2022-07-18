@@ -3,6 +3,7 @@
 <%@ page import="model.Student" %>
 <%@ page import="model.StudentGrade" %>
 <%@ page import="model.GradeItem" %>
+<%@ page import="model.Course" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,6 +12,10 @@
         <link href="CSS/grid_control.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <%
+                  Course c = (Course)request.getAttribute("course");
+         %>
+         <h1><%= c.getName() %></h1>
         <form action="markView" method="POST">
             <table border="1px">
                 <tr>
@@ -47,7 +52,7 @@
                 </c:forEach>
             </table>
             <br/>
-            
+            <input name="c" value ="<%= c.getCourseId()%>" type="hidden">
             <input type="submit" value="Save"/>
         </form>
     </body>

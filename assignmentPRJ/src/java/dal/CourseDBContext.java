@@ -48,7 +48,32 @@ public class CourseDBContext extends DBContext<Course> {
 
     @Override
     public Course get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Course c = new Course();
+        try {
+            String sql = "SELECT [course_id]\n" +
+                                "      ,[teacher_id]\n" +
+                                "      ,[subject_id]\n" +
+                                "      ,[name]\n" +
+                                "      ,[semester]\n" +
+                                "  FROM [dbo].[Course]\n"+
+                                "WHERE course_id = ?";
+                                    
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                
+                c.setCourseId(rs.getInt("course_id"));
+                c.setTeacherId(rs.getInt("teacher_id"));
+                c.setSubjectId(rs.getInt("subject_id"));
+                c.setName(rs.getString("name"));
+                c.setSemester(rs.getString("semester"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
     }
     
     public ArrayList<Course> studentCourses(int id){

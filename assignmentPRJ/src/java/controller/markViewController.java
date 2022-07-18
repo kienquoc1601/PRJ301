@@ -5,6 +5,7 @@
 
 package controller;
 
+import dal.CourseDBContext;
 import dal.GradeDBContext;
 import dal.StudentDBContext;
 import java.io.IOException;
@@ -14,6 +15,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import model.Course;
 import model.GradeItem;
 import model.Student;
 import model.StudentGrade;
@@ -38,6 +42,7 @@ public class markViewController extends BaseAuthenticationController {
     
         StudentDBContext dbStudent = new StudentDBContext();
         GradeDBContext dbGrade = new GradeDBContext();
+        CourseDBContext dbCourse= new CourseDBContext();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -62,12 +67,14 @@ public class markViewController extends BaseAuthenticationController {
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int cid = Integer.parseInt(request.getParameter("id"));
+        Course c = dbCourse.get(cid);
         ArrayList<Student> students = dbStudent.CourseStudent(cid);
         ArrayList<GradeItem> gradeItems = dbGrade.CourseGrade(cid);
         ArrayList<StudentGrade> studentGrades = dbGrade.CourseStudentGrade(cid);
         request.setAttribute("students", students);
         request.setAttribute("gradeItems", gradeItems);
         request.setAttribute("studentGrades", studentGrades);
+        request.setAttribute("course", c);     
         request.getRequestDispatcher("Views/courseMarkView.jsp").forward(request, response);
 //        for(Student s : students){
 //            response.getWriter().println(s.getStudentId()+"-"+s.getName());
@@ -101,7 +108,8 @@ public class markViewController extends BaseAuthenticationController {
             grades.add(sg);
         }
         dbGrade.saveChanges(grades);
-        response.sendRedirect("markView?id=1");
+        String c = request.getParameter("c");
+        response.sendRedirect("markView?id="+c);
     }
 
 }
